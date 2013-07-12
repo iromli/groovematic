@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Welcoming Acrylamid</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Isman Firmansyah">
+        
+        <link href="/css/style.css" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="## A Short Story: An Introduction
+
+Recently, i swi..." />
+    <meta name="keywords" content="" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div id="sidebar-container">
+                    <div id="sidebar" class="span3">
+                        <h1 id="site-title">groovematic</h1>
+                        <h2>Explore</h2>
+                        <ul>
+                            <li><a href="/">Archives</a></li>
+                            <li><a href="/atom.xml">Feeds</a></li>
+                            <li><a href="/about/">About</a></li>
+                        </ul>
+                        <h2>Elsewhere</h2>
+                        <ul>
+                            <li>
+                                <a href="http://github.com/iromli" target="_blank">GitHub</a>
+                            </li>
+                            <li>
+                                <a href="http://twitter.com/iromli" target="_blank">Twitter</a>
+                            </li>
+                        </ul>
+                        <p id="legal">Groovematic &copy; 2013 <br/><a href="https://github.com/iromli/groovematic" target="_blank">Use the source, Luke!</a></p>
+                    </div>
+                </div>
+                <div class="offset4 span12">
+                    <div id="main">
+                        
+    <div class="item">
+        <header>
+            <h1>Welcoming Acrylamid</h1>
+            <p><em>Wednesday, January 23, 2013</em></p>
+        </header>
+        <div class="body">
+            <h2>A Short Story: An Introduction</h2>
+<p>Recently, i switched to <a href="http://posativ.org/acrylamid/">Acrylamid</a> as my website generator.
+So, what is Acrylamid anyway? Quoted from its GitHub project page:</p>
+<blockquote>
+<p>Acrylamid is a mixture of nanoc, Pyblosxom and Pelican licensed under BSD Style, 2 clauses.</p>
+</blockquote>
+<p>Except <a href="http://pyblosxom.bluesock.org/">Pyblosxom</a>, i've tried <a href="http://nanoc.stoneship.org/">nanoc</a> and <a href="http://getpelican.com/">Pelican</a>.
+Both are cool projects, but in the end i chose nanoc over Pelican. Despite of being a Ruby-based, nanoc gave me all i want -- the flexibility.
+Then the problem came up. Whenever i need to customize the library, i cringed for knowing that my Ruby knowledge is horrible.</p>
+<p>During my journey to find a nanoc-like Python-based static website generator, i rant about it on Twitter.
+Surprisingly, the core developer of nanoc gave his reaction.</p>
+<p><img alt="me and dennis having a talk" class="thumbnail" src="/img/2013/01/nanoc-convo.png" /></p>
+<p>As you could see, i was using <a href="https://github.com/Anomareh/mynt">Mynth</a> before i found Acrylamid. Anyway, here's my reaction after reading Acrylamid's <code>README.rst</code>:</p>
+<p><img alt="first impression" class="thumbnail" src="/img/2013/01/i-found-acrylamid.png" /></p>
+<p>Well, that's true. Acrylamid is promising. Moreover, it's built on top of Python, i feel confident to use it whatever i want. I also made <a href="https://github.com/posativ/acrylamid/pull/97">my first contribution</a> recently.</p>
+<h2>Another Story: The Gotchas</h2>
+<blockquote>
+<p>There is always first time for everything.</p>
+</blockquote>
+<p>I use LESS alot, so i gave a try on how to integrate LESS and Acrylamid.
+Fortunately, Acrylamid does have <code>LESS</code> static filter.
+But the thing is, i have 2 LESS files, <code>a.less</code> and <code>b.less</code> under <code>theme/less</code> directory.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">/* === a.less === */</span>
+<span class="k">@size</span><span class="o">:</span> <span class="nt">10px</span><span class="p">;</span>
+<span class="nc">.floatleft</span> <span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="o">@</span><span class="k">size</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* === b.less === */</span>
+<span class="k">@size</span><span class="o">:</span> <span class="nt">10px</span><span class="p">;</span>
+<span class="nc">.floatright</span> <span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span> <span class="k">right</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="o">@</span><span class="k">size</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>It was working fine when i invoked <code>acrylamid autocompile</code>, but things were going insane when i was trying to re-use variable.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span class="c">/* === a.less === */</span>
+<span class="k">@import</span> <span class="s2">&quot;b&quot;</span><span class="p">;</span>
+<span class="k">@size</span><span class="o">:</span> <span class="nt">10px</span><span class="p">;</span>
+<span class="nc">.floatleft</span> <span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="o">@</span><span class="k">size</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c">/* === b.less === */</span>
+<span class="nc">.floatright</span> <span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span> <span class="k">right</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="o">@</span><span class="k">size</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table>
+
+<p>Yeah, LESS was angry!
+This happened because Acrylamid parses each file in separate process.
+That's why when <code>b.less</code> is parsed, the <code>lessc</code> executable will complain about missing <code>@size</code> variable.</p>
+<p>I was scratching my head then, until i found <a href="https://github.com/markvl/www.vlent.nl">an example</a>.
+It uses SASS, but the concept of compiling the assets is similar to my case.
+So i just moved all <code>.less</code> files out from <code>theme</code> to <code>less</code> directory.
+Afterwards, since LESS doesn't have a watcher, i use <a href="https://github.com/gorakhargosh/watchdog">Watchdog</a> to monitor the changes.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre>watchmedo shell-command <span class="se">\</span>
+    --patterns<span class="o">=</span><span class="s2">&quot;*.less&quot;</span> <span class="se">\</span>
+    --recursive <span class="se">\</span>
+    --command<span class="o">=</span><span class="s2">&quot;lessc -x $PWD/less/a.less &gt; $PWD/theme/css/b.css&quot;</span> <span class="se">\</span>
+    <span class="nv">$PWD</span>
+</pre></div>
+</td></tr></table>
+
+<p>Each time any <code>.less</code> is modified, <code>watchmedo</code> invokes <code>lessc</code> and compiles the file into CSS.
+Acrylamid will recognize the changes there.
+Voila, everything is worked as i expected.</p>
+<h2>The Conclusion</h2>
+<p>Acrylamid is cool and flexible enough. I don't have more words to say, just Try It and See.</p>
+        </div>
+    </div>
+    <div class="neighbors row">
+        
+        <div class="pull-left span6">
+            <span>&larr;</span>&nbsp;<a href="/2012/12/deprecating-the-year-2012//">Deprecating The Year 2012</a>
+        </div>
+        
+        
+        <div class="pull-right span6">
+            <a href="/2013/03/tornado-lessons-learned//">Tornado, Lessons Learned</a>&nbsp;<span>&rarr;</span>
+        </div>
+        
+    </div>
+
+                    </div>
+                    
+    
+    
+        <div id="disqus_thread"></div>
+    
+
+                </div>
+            </div>
+        </div>
+        
+    <script type="text/javascript">
+        if (window.location.hostname != 'localhost') {
+            var dq_container = document.getElementById('disqus_thread');
+
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            // required: replace example with your forum shortname
+            var disqus_shortname = "groovematic";
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+
+            dq_container.style['padding-top'] = '40px';
+            dq_container.style['margin-bottom'] = '40px';
+            dq_container.style['border-top'] = 'dashed 1px #DDD';
+        }
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </body>
+</html>
