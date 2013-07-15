@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Introducing Genma</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Isman Firmansyah">
+        
+        <link href="/css/style.css" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <meta name="description" content="## I Need Isolated Workspace
+
+While learning [Go][..." />
+    <meta name="keywords" content="" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div id="sidebar-container">
+                    <div id="sidebar" class="span3">
+                        <h1 id="site-title">groovematic</h1>
+                        <h2>Explore</h2>
+                        <ul>
+                            <li><a href="/">Archives</a></li>
+                            <li><a href="/atom.xml">Feeds</a></li>
+                            <li><a href="/about/">About</a></li>
+                        </ul>
+                        <h2>Elsewhere</h2>
+                        <ul>
+                            <li>
+                                <a href="http://github.com/iromli" target="_blank">GitHub</a>
+                            </li>
+                            <li>
+                                <a href="http://twitter.com/iromli" target="_blank">Twitter</a>
+                            </li>
+                        </ul>
+                        <p id="legal">Groovematic &copy; 2013 <br/><a href="https://github.com/iromli/groovematic" target="_blank">Use the source, Luke!</a></p>
+                    </div>
+                </div>
+                <div class="offset4 span12">
+                    <div id="main">
+                        
+    <div class="item">
+        <header>
+            <h1>Introducing Genma</h1>
+            <p><em>Sunday, July 14, 2013</em></p>
+        </header>
+        <div class="body">
+            <h2>I Need Isolated Workspace</h2>
+<p>While learning <a href="http://golang.org/">Go</a>, i found myself missing Python <a href="http://www.virtualenv.org/">virtualenv</a>.
+If you're not familiar with it, just imagine an isolated workspace for your development
+(for convenience, we'll call it virtualenv).</p>
+<p>Surprisingly, creating this virtualenv is pretty easy in Go.
+By reading the <a href="http://golang.org/doc/code.html#Organization">documentation</a>, you'll know that you only need to
+customize Go environment variables.
+Let say, if i want to create a workspace located at
+<code>~/workspaces/foobar</code> and install 3rd party packages,
+all i need to do is simply typing following command:</p>
+<div class="codehilite"><pre><span class="nv">$ GOPATH</span><span class="o">=</span>~/workspaces/foobar <span class="nv">GOBIN</span><span class="o">=</span>~/workspaces/foobar/bin go get github.com/user/repo
+</pre></div>
+
+
+<p>Go will takes care everything, including creating a bunch of directories:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>tree ~/workspaces
+/home/iromli/workspaces
+└── foobar
+    ├── bin
+    ├── pkg
+    └── src
+</pre></div>
+
+
+<p>Now, the question is when i have lot of virtualenv,
+how do i manage them without having to type repetitive commands?
+Enter <a href="https://github.com/iromli/genma">Genma</a>.</p>
+<h2>Genma The Virtualenv Manager</h2>
+<p>Genma is heavily inspired by <a href="https://bitbucket.org/dhellmann/virtualenvwrapper">virtualenvwrapper</a>.
+Hence the main goals are:</p>
+<ul>
+<li>creating and deleting virtualenv should be easy</li>
+<li>switching between virtualenv back and forth should not PITA</li>
+</ul>
+<p>At the time i wrote this blog post, <a href="https://github.com/iromli/genma/releases/tag/0.2.0">v0.2.0</a> has been released.
+So let's have a quick tour, shall we?</p>
+<h3>Installing Genma</h3>
+<p>First things first, ensure you have a working Go installation
+(i'm using <a href="https://github.com/wfarr/goenv">goenv</a> by the way) and Bash.
+Afterwards, you need to grab a copy of Genma.
+According to its <code>README.md</code> file, the preferred setup is to use <code>git</code>.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>git clone git://github.com/iromli/genma.git ~/.genma
+<span class="nv">$ </span><span class="nb">cd</span> ~/.genma
+<span class="nv">$ </span>git tag -l | tail -1 | xargs git checkout
+<span class="nv">$ </span><span class="nb">source</span> ~/.genma/genma.sh
+</pre></div>
+
+
+<p>Confirm that the installation process is completed:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>genma -h
+Go <span class="o">(</span>virtual<span class="o">)</span> ENvironment MAnager v0.2.0
+
+Usage: genma &lt;<span class="nb">command</span>&gt; <span class="o">[</span>&lt;args&gt;<span class="o">]</span>
+
+Commands:
+  deactivate              Disable active virtualenv.
+  lsvirtualenv            List available virtualenv.
+  mkvirtualenv &lt;name&gt;     Create and activate new virtualenv.
+  rmvirtualenv &lt;name&gt;     Delete existing virtualenv.
+  workon &lt;name&gt;           Activate or switch to a virtual environment.
+
+Options:
+  -h, --help              Show <span class="nb">help </span>and exit.
+  -v, --version           Show version and <span class="nb">exit</span>
+</pre></div>
+
+
+<p>If you want <code>genma</code> always available in your shell,
+simply do <code>source ~/.genma/genma.sh</code> elsewhere (e.g. <code>~/.bashrc</code>).</p>
+<h3>Creating Virtualenv</h3>
+<p>Assuming that you haven't create any virtualenv using Genma, let's do it now.</p>
+<div class="codehilite"><pre><span class="nv">$ </span>genma mkvirtualenv env
+</pre></div>
+
+
+<p>By default, your new virtualenv will be created under <code>~/.genma/virtualenv</code> directory.
+This location is called <code>$GENMA_HOME</code> and it's defined as environment variable.</p>
+<div class="codehilite"><pre><span class="o">(</span>g:env<span class="o">)</span><span class="nv">$ </span>tree ~/.genma/virtualenv
+~/.genma/virtualenv
+└── env
+    ├── bin
+    ├── pkg
+    └── src
+</pre></div>
+
+
+<p>Notice that your shell prompt is prefixed with <code>(g:env)</code>.
+That's how Genma tells you if you're in any active virtualenv.
+The format itself is <em>(g:any_virtualenv_name)</em>.
+The <code>g:</code> part distinguishes Go and Python virtualenv (in case you're a Pythonista too).</p>
+<h3>Disabling Virtualenv</h3>
+<p>Once your virtualenv has been created, you can disable it with <code>genma
+deactivate</code> command.
+Behind the scene, Genma removes shell prompt prefix and
+unsets some Go environment variables.</p>
+<h3>Activating or Switching to Virtualenv</h3>
+<p>Assuming <em>env</em> is in dormant state, how do you activate it? That's easy, just
+do <code>genma workon env</code>. Ofcourse you can always change the virtualenv name.</p>
+<h3>Deleting Virtualenv</h3>
+<p>So you want to remove unnecessary <em>env</em>? <code>genma rmvirtualenv env</code> will do the
+dirty job for you. However you can't remove currently-active virtualenv though.</p>
+<h3>Listing All Virtualenv</h3>
+<p>The <code>genma lsvirtualenv</code> likely useful if you have lots of virtualenv.</p>
+<p>See illustration below:</p>
+<div class="codehilite"><pre><span class="o">(</span>g:env<span class="o">)</span><span class="nv">$ </span>tree ~/.genma/virtualenv
+~/.genma/virtualenv
+└── env
+    ├── bin
+    ├── pkg
+    └── src
+└── env2
+    ├── bin
+    ├── pkg
+    └── src
+</pre></div>
+
+
+<p>Given the hierarchy, the following command will return a list of virtualenv names:</p>
+<div class="codehilite"><pre><span class="nv">$ </span>genma lsvirtualenv
+env
+env2
+</pre></div>
+
+
+<p>That's it, you got the basic of Genma commands.</p>
+<h2>Genma and You</h2>
+<p>Genma might be overkill for your daily workflow.
+But as the author of Genma, i find it useful especially when i have lots of
+workspaces. I hope it helps you too.</p>
+        </div>
+    </div>
+    <div class="neighbors row">
+        
+        <div class="pull-left span6">
+            <span>&larr;</span>&nbsp;<a href="/2013/03/tornado-lessons-learned/">Tornado, Lessons Learned</a>
+        </div>
+        
+        
+    </div>
+
+                    </div>
+                    
+    
+    
+        <div id="disqus_thread"></div>
+    
+
+                </div>
+            </div>
+        </div>
+        
+    <script type="text/javascript">
+        if (window.location.hostname != 'localhost') {
+            var dq_container = document.getElementById('disqus_thread');
+
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            // required: replace example with your forum shortname
+            var disqus_shortname = "groovematic";
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script');
+                dsq.type = 'text/javascript';
+                dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+
+            dq_container.style['padding-top'] = '40px';
+            dq_container.style['margin-bottom'] = '40px';
+            dq_container.style['border-top'] = 'dashed 1px #DDD';
+        }
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </body>
+</html>

@@ -11,8 +11,150 @@
     <link rel="self" type="application/atom+xml" href="http://groovematic.com/atom.xml" />
     <icon>http://groovematic.com/img/favicon.ico</icon>
     <logo>http://groovematic.com/feed-logo.png</logo>
-    <updated>2013-03-03T21:19:00Z</updated>
+    <updated>2013-07-13T17:19:00Z</updated>
     <generator uri="https://github.com/posativ/acrylamid/" version="0.7.1">acrylamid</generator>
+        <entry>
+                <title>Introducing Genma</title>
+                <link rel="alternate" type="text/html" href="http://groovematic.com/2013/07/introducing-genma/" />
+                <id>tag:groovematic.com,2013-07-14:/2013/07/introducing-genma</id>
+                <updated>2013-07-13T17:19:00Z</updated>
+                
+                <author>
+                    <name>Isman Firmansyah</name>
+                    <uri>http://groovematic.com/</uri>
+                    <email>isman.firmansyah@gmail.com</email>
+                </author>
+                <content type="html">&lt;h2&gt;I Need Isolated Workspace&lt;/h2&gt;
+        &lt;p&gt;While learning &lt;a href=&#34;http://golang.org/&#34;&gt;Go&lt;/a&gt;, i found myself missing Python &lt;a href=&#34;http://www.virtualenv.org/&#34;&gt;virtualenv&lt;/a&gt;.
+        If you&#39;re not familiar with it, just imagine an isolated workspace for your development
+        (for convenience, we&#39;ll call it virtualenv).&lt;/p&gt;
+        &lt;p&gt;Surprisingly, creating this virtualenv is pretty easy in Go.
+        By reading the &lt;a href=&#34;http://golang.org/doc/code.html#Organization&#34;&gt;documentation&lt;/a&gt;, you&#39;ll know that you only need to
+        customize Go environment variables.
+        Let say, if i want to create a workspace located at
+        &lt;code&gt;~/workspaces/foobar&lt;/code&gt; and install 3rd party packages,
+        all i need to do is simply typing following command:&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;$ GOPATH&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;~/workspaces/foobar &lt;span class=&#34;nv&#34;&gt;GOBIN&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;~/workspaces/foobar/bin go get github.com/user/repo
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;Go will takes care everything, including creating a bunch of directories:&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;tree ~/workspaces
+        /home/iromli/workspaces
+        └── foobar
+            ├── bin
+            ├── pkg
+            └── src
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;Now, the question is when i have lot of virtualenv,
+        how do i manage them without having to type repetitive commands?
+        Enter &lt;a href=&#34;https://github.com/iromli/genma&#34;&gt;Genma&lt;/a&gt;.&lt;/p&gt;
+        &lt;h2&gt;Genma The Virtualenv Manager&lt;/h2&gt;
+        &lt;p&gt;Genma is heavily inspired by &lt;a href=&#34;https://bitbucket.org/dhellmann/virtualenvwrapper&#34;&gt;virtualenvwrapper&lt;/a&gt;.
+        Hence the main goals are:&lt;/p&gt;
+        &lt;ul&gt;
+        &lt;li&gt;creating and deleting virtualenv should be easy&lt;/li&gt;
+        &lt;li&gt;switching between virtualenv back and forth should not PITA&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;p&gt;At the time i wrote this blog post, &lt;a href=&#34;https://github.com/iromli/genma/releases/tag/0.2.0&#34;&gt;v0.2.0&lt;/a&gt; has been released.
+        So let&#39;s have a quick tour, shall we?&lt;/p&gt;
+        &lt;h3&gt;Installing Genma&lt;/h3&gt;
+        &lt;p&gt;First things first, ensure you have a working Go installation
+        (i&#39;m using &lt;a href=&#34;https://github.com/wfarr/goenv&#34;&gt;goenv&lt;/a&gt; by the way) and Bash.
+        Afterwards, you need to grab a copy of Genma.
+        According to its &lt;code&gt;README.md&lt;/code&gt; file, the preferred setup is to use &lt;code&gt;git&lt;/code&gt;.&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git clone git://github.com/iromli/genma.git ~/.genma
+        &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ~/.genma
+        &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;git tag -l | tail -1 | xargs git checkout
+        &lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;source&lt;/span&gt; ~/.genma/genma.sh
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;Confirm that the installation process is completed:&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;genma -h
+        Go &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;virtual&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; ENvironment MAnager v0.2.0
+        
+        Usage: genma &amp;lt;&lt;span class=&#34;nb&#34;&gt;command&lt;/span&gt;&amp;gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&amp;lt;args&amp;gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+        
+        Commands:
+          deactivate              Disable active virtualenv.
+          lsvirtualenv            List available virtualenv.
+          mkvirtualenv &amp;lt;name&amp;gt;     Create and activate new virtualenv.
+          rmvirtualenv &amp;lt;name&amp;gt;     Delete existing virtualenv.
+          workon &amp;lt;name&amp;gt;           Activate or switch to a virtual environment.
+        
+        Options:
+          -h, --help              Show &lt;span class=&#34;nb&#34;&gt;help &lt;/span&gt;and exit.
+          -v, --version           Show version and &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt;
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;If you want &lt;code&gt;genma&lt;/code&gt; always available in your shell,
+        simply do &lt;code&gt;source ~/.genma/genma.sh&lt;/code&gt; elsewhere (e.g. &lt;code&gt;~/.bashrc&lt;/code&gt;).&lt;/p&gt;
+        &lt;h3&gt;Creating Virtualenv&lt;/h3&gt;
+        &lt;p&gt;Assuming that you haven&#39;t create any virtualenv using Genma, let&#39;s do it now.&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;genma mkvirtualenv env
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;By default, your new virtualenv will be created under &lt;code&gt;~/.genma/virtualenv&lt;/code&gt; directory.
+        This location is called &lt;code&gt;$GENMA_HOME&lt;/code&gt; and it&#39;s defined as environment variable.&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;g:env&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;tree ~/.genma/virtualenv
+        ~/.genma/virtualenv
+        └── env
+            ├── bin
+            ├── pkg
+            └── src
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;Notice that your shell prompt is prefixed with &lt;code&gt;(g:env)&lt;/code&gt;.
+        That&#39;s how Genma tells you if you&#39;re in any active virtualenv.
+        The format itself is &lt;em&gt;(g:any_virtualenv_name)&lt;/em&gt;.
+        The &lt;code&gt;g:&lt;/code&gt; part distinguishes Go and Python virtualenv (in case you&#39;re a Pythonista too).&lt;/p&gt;
+        &lt;h3&gt;Disabling Virtualenv&lt;/h3&gt;
+        &lt;p&gt;Once your virtualenv has been created, you can disable it with &lt;code&gt;genma
+        deactivate&lt;/code&gt; command.
+        Behind the scene, Genma removes shell prompt prefix and
+        unsets some Go environment variables.&lt;/p&gt;
+        &lt;h3&gt;Activating or Switching to Virtualenv&lt;/h3&gt;
+        &lt;p&gt;Assuming &lt;em&gt;env&lt;/em&gt; is in dormant state, how do you activate it? That&#39;s easy, just
+        do &lt;code&gt;genma workon env&lt;/code&gt;. Ofcourse you can always change the virtualenv name.&lt;/p&gt;
+        &lt;h3&gt;Deleting Virtualenv&lt;/h3&gt;
+        &lt;p&gt;So you want to remove unnecessary &lt;em&gt;env&lt;/em&gt;? &lt;code&gt;genma rmvirtualenv env&lt;/code&gt; will do the
+        dirty job for you. However you can&#39;t remove currently-active virtualenv though.&lt;/p&gt;
+        &lt;h3&gt;Listing All Virtualenv&lt;/h3&gt;
+        &lt;p&gt;The &lt;code&gt;genma lsvirtualenv&lt;/code&gt; likely useful if you have lots of virtualenv.&lt;/p&gt;
+        &lt;p&gt;See illustration below:&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;g:env&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;tree ~/.genma/virtualenv
+        ~/.genma/virtualenv
+        └── env
+            ├── bin
+            ├── pkg
+            └── src
+        └── env2
+            ├── bin
+            ├── pkg
+            └── src
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;Given the hierarchy, the following command will return a list of virtualenv names:&lt;/p&gt;
+        &lt;div class=&#34;codehilite&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;$ &lt;/span&gt;genma lsvirtualenv
+        env
+        env2
+        &lt;/pre&gt;&lt;/div&gt;
+        
+        
+        &lt;p&gt;That&#39;s it, you got the basic of Genma commands.&lt;/p&gt;
+        &lt;h2&gt;Genma and You&lt;/h2&gt;
+        &lt;p&gt;Genma might be overkill for your daily workflow.
+        But as the author of Genma, i find it useful especially when i have lots of
+        workspaces. I hope it helps you too.&lt;/p&gt;</content>
+            </entry>
+    
         <entry>
                 <title>Tornado, Lessons Learned</title>
                 <link rel="alternate" type="text/html" href="http://groovematic.com/2013/03/tornado-lessons-learned/" />
