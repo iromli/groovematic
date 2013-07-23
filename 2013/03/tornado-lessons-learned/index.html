@@ -1,51 +1,55 @@
-<!DOCTYPE HTML>
+
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>Tornado, Lessons Learned</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="author" content="Isman Firmansyah">
-        
+<head>
+    <title>Tornado, Lessons Learned</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/pure-min.css" rel="stylesheet" type="text/css">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <meta name="author" content="Isman Firmansyah">
+        
     <meta name="description" content="## Back In The Days
 
 Last year, during [SixReps][s..." />
     <meta name="keywords" content="" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div id="sidebar-container">
-                    <div id="sidebar" class="span3">
-                        <h1 id="site-title">groovematic</h1>
-                        <h2>Explore</h2>
-                        <ul>
-                            <li><a href="/">Archives</a></li>
-                            <li><a href="/atom.xml">Feeds</a></li>
-                            <li><a href="/about/">About</a></li>
-                        </ul>
-                        <h2>Elsewhere</h2>
-                        <ul>
-                            <li>
-                                <a href="http://github.com/iromli" target="_blank">GitHub</a>
-                            </li>
-                            <li>
-                                <a href="http://twitter.com/iromli" target="_blank">Twitter</a>
-                            </li>
-                        </ul>
-                        <p id="legal">Groovematic &copy; 2013 <br/><a href="https://github.com/iromli/groovematic" target="_blank">Use the source, Luke!</a></p>
-                    </div>
-                </div>
-                <div class="offset4 span12">
-                    <div id="main">
-                        
-    <div class="item">
-        <header>
-            <h1>Tornado, Lessons Learned</h1>
-            <p><em>Monday, March 04, 2013</em></p>
-        </header>
-        <div class="body">
-            <h2>Back In The Days</h2>
+</head>
+<body>
+    <div class="pure-g-r" id="layout">
+        <div class="sidebar pure-u">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-title">groovematic</h1>
+                    <h2 class="brand-tagline"></h2>
+                </hgroup>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a class="pure-button" href="/">Archives</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="pure-button" href="/atom.xml">Feeds</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <div class="pure-u-1">
+            <div class="content">
+                
+    <div class="posts">
+        <section class="post">
+            <header class="post-header">
+                <h2 class="post-title">Tornado, Lessons Learned</h2>
+                <p class="content-subhead">
+                    <em>Monday, March 04, 2013</em>
+                </p>
+            </header>
+
+            <div class="post-description">
+                <p><h2>Back In The Days</h2>
 <p>Last year, during <a href="http://www.sixreps.com">SixReps</a> days, me and Tino (<a href="http://twitter.com/kusut">@kusut</a>)
 worked on and maintained a project built on top of <a href="http://tornadoweb.org/">Tornado</a>.
 The project itself is a web service that accepts 3rd-party apps request
@@ -334,33 +338,48 @@ It helps you write a non-callback-style code.</p>
 </ol>
 <p><strong>PS</strong>: Eventually you'll get this Tornado thingy sooner or later.
 You might roll your own IOLoop-compatible library someday (i wrote <a href="https://github.com/iromli/dusky">dusky</a>).
-It's always fun to learn something new. Trust me, i've been there, done that.</p>
-        </div>
-    </div>
-    <div class="neighbors row">
-        
-        <div class="pull-left span6">
-            <span>&larr;</span>&nbsp;<a href="/2013/01/welcoming-acrylamid/">Welcoming Acrylamid</a>
-        </div>
-        
-        
-        <div class="pull-right span6">
-            <a href="/2013/07/introducing-genma/">Introducing Genma</a>&nbsp;<span>&rarr;</span>
-        </div>
-        
+It's always fun to learn something new. Trust me, i've been there, done that.</p></p>
+            </div>
+        </section>
     </div>
 
-                    </div>
-                    
+    <div class="neighbors">
+        
+        <div class="pull-left">
+            <span>&larr;</span>&nbsp;<a href="/2013/01/welcoming-acrylamid/">prev</a>
+        </div>
+        
+        
+        <div class="pull-right">
+            <a href="/2013/07/introducing-genma/">next</a>&nbsp;<span>&rarr;</span>
+        </div>
+        
+        <div style="clear:both;"></div>
+    </div>
+
+                
     
     
         <div id="disqus_thread"></div>
     
 
+                <div class="footer">
+                    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+                        <p id="legal">Groovematic &copy; 2013</p>
+                        <ul>
+                            <li>
+                                <a href="/about/">Who Am I?</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/iromli/groovematic" target="_blank">Use The Source, Luke!</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        
+    </div>
+    
     <script type="text/javascript">
         if (window.location.hostname != 'localhost') {
             var dq_container = document.getElementById('disqus_thread');
@@ -385,6 +404,5 @@ It's always fun to learn something new. Trust me, i've been there, done that.</p
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-
-    </body>
+</body>
 </html>

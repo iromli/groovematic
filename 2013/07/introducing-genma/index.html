@@ -1,51 +1,55 @@
-<!DOCTYPE HTML>
+
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>Introducing Genma</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="author" content="Isman Firmansyah">
-        
+<head>
+    <title>Introducing Genma</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/pure-min.css" rel="stylesheet" type="text/css">
         <link href="/css/style.css" rel="stylesheet" type="text/css">
         <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <meta name="author" content="Isman Firmansyah">
+        
     <meta name="description" content="## I Need Isolated Workspace
 
 While learning [Go][..." />
     <meta name="keywords" content="" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div id="sidebar-container">
-                    <div id="sidebar" class="span3">
-                        <h1 id="site-title">groovematic</h1>
-                        <h2>Explore</h2>
-                        <ul>
-                            <li><a href="/">Archives</a></li>
-                            <li><a href="/atom.xml">Feeds</a></li>
-                            <li><a href="/about/">About</a></li>
-                        </ul>
-                        <h2>Elsewhere</h2>
-                        <ul>
-                            <li>
-                                <a href="http://github.com/iromli" target="_blank">GitHub</a>
-                            </li>
-                            <li>
-                                <a href="http://twitter.com/iromli" target="_blank">Twitter</a>
-                            </li>
-                        </ul>
-                        <p id="legal">Groovematic &copy; 2013 <br/><a href="https://github.com/iromli/groovematic" target="_blank">Use the source, Luke!</a></p>
-                    </div>
-                </div>
-                <div class="offset4 span12">
-                    <div id="main">
-                        
-    <div class="item">
-        <header>
-            <h1>Introducing Genma</h1>
-            <p><em>Sunday, July 14, 2013</em></p>
-        </header>
-        <div class="body">
-            <h2>I Need Isolated Workspace</h2>
+</head>
+<body>
+    <div class="pure-g-r" id="layout">
+        <div class="sidebar pure-u">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-title">groovematic</h1>
+                    <h2 class="brand-tagline"></h2>
+                </hgroup>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a class="pure-button" href="/">Archives</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="pure-button" href="/atom.xml">Feeds</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <div class="pure-u-1">
+            <div class="content">
+                
+    <div class="posts">
+        <section class="post">
+            <header class="post-header">
+                <h2 class="post-title">Introducing Genma</h2>
+                <p class="content-subhead">
+                    <em>Sunday, July 14, 2013</em>
+                </p>
+            </header>
+
+            <div class="post-description">
+                <p><h2>I Need Isolated Workspace</h2>
 <p>While learning <a href="http://golang.org/">Go</a>, i found myself missing Python <a href="http://www.virtualenv.org/">virtualenv</a>.
 If you're not familiar with it, just imagine an isolated workspace for your development
 (for convenience, we'll call it virtualenv).</p>
@@ -173,29 +177,44 @@ env2
 <h2>Genma and You</h2>
 <p>Genma might be overkill for your daily workflow.
 But as the author of Genma, i find it useful especially when i have lots of
-workspaces. I hope it helps you too.</p>
-        </div>
-    </div>
-    <div class="neighbors row">
-        
-        <div class="pull-left span6">
-            <span>&larr;</span>&nbsp;<a href="/2013/03/tornado-lessons-learned/">Tornado, Lessons Learned</a>
-        </div>
-        
-        
+workspaces. I hope it helps you too.</p></p>
+            </div>
+        </section>
     </div>
 
-                    </div>
-                    
+    <div class="neighbors">
+        
+        <div class="pull-left">
+            <span>&larr;</span>&nbsp;<a href="/2013/03/tornado-lessons-learned/">prev</a>
+        </div>
+        
+        
+        <div style="clear:both;"></div>
+    </div>
+
+                
     
     
         <div id="disqus_thread"></div>
     
 
+                <div class="footer">
+                    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+                        <p id="legal">Groovematic &copy; 2013</p>
+                        <ul>
+                            <li>
+                                <a href="/about/">Who Am I?</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/iromli/groovematic" target="_blank">Use The Source, Luke!</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        
+    </div>
+    
     <script type="text/javascript">
         if (window.location.hostname != 'localhost') {
             var dq_container = document.getElementById('disqus_thread');
@@ -220,6 +239,5 @@ workspaces. I hope it helps you too.</p>
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-
-    </body>
+</body>
 </html>
