@@ -11,8 +11,106 @@
     <link rel="self" type="application/atom+xml" href="http://groovematic.com/atom.xml" />
     <icon>http://groovematic.com/img/favicon.ico</icon>
     <logo>http://groovematic.com/feed-logo.png</logo>
-    <updated>2013-07-13T17:19:00Z</updated>
-    <generator uri="https://github.com/posativ/acrylamid/" version="0.7.1">acrylamid</generator>
+    <updated>2013-11-22T22:18:00Z</updated>
+    <generator uri="https://github.com/posativ/acrylamid/" version="0.7.7">acrylamid</generator>
+        <entry>
+                <title>The Birth of Flosculus</title>
+                <link rel="alternate" type="text/html" href="http://groovematic.com/2013/11/the-birth-of-flosculus/" />
+                <id>tag:groovematic.com,2013-11-23:/2013/11/the-birth-of-flosculus</id>
+                <updated>2013-11-22T22:18:00Z</updated>
+                
+                <author>
+                    <name>Isman Firmansyah</name>
+                    <uri>http://groovematic.com/</uri>
+                    <email>isman.firmansyah@gmail.com</email>
+                </author>
+                <content type="html">&lt;h2&gt;A Call For Help&lt;/h2&gt;
+        &lt;p&gt;Few days ago, i tweeted this:&lt;/p&gt;
+        &lt;p&gt;&lt;img alt=&#34;CPU-blown&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/cpu-blown.png&#34;/&gt;&lt;/p&gt;
+        &lt;p&gt;If you notice, the top 2 commands show a huge difference between
+        CPU usage consumed by Ruby and Python programs — the former is a
+        &lt;a href=&#34;http://fluentd.org/&#34;&gt;Fluentd&lt;/a&gt;-based script that collects &lt;a href=&#34;http://nginx.org/&#34;&gt;nginx&lt;/a&gt; access log,
+        parses each line, and sends the data to another Fluentd instance
+        (in remote server); while the latter is a &lt;a href=&#34;http://socket.io/&#34;&gt;socket.io&lt;/a&gt;
+        server built on top of &lt;a href=&#34;https://github.com/abourget/gevent-socketio&#34;&gt;gevent-socketio&lt;/a&gt; —
+        in AWS EC2 micro instance.&lt;/p&gt;
+        &lt;p&gt;I was wondering what went wrong?
+        Hence i looked up to the official &lt;a href=&#34;http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts_micro_instances.html#when-instance-uses-allotted-resources&#34;&gt;AWS EC2 documentation&lt;/a&gt;
+        to find any hint, and stumbled upon a line:&lt;/p&gt;
+        &lt;blockquote&gt;
+        &lt;p&gt;Limit the number of recurring processes that use CPU time (for example, cron jobs, daemons)&lt;/p&gt;
+        &lt;/blockquote&gt;
+        &lt;p&gt;That&#39;s strange!! Both are daemonized long-running programs, but why the Ruby script blown the CPU?
+        Do i need to have a bigger box for a small service
+        and convince my employer to spend more money?&lt;/p&gt;
+        &lt;h2&gt;First Attempt: Becoming A Rubyist&lt;/h2&gt;
+        &lt;p&gt;That day, i was reading the sourcecode trying to figure out
+        how Fluentd works internally. &lt;strong&gt;And i failed!!&lt;/strong&gt;&lt;/p&gt;
+        &lt;p&gt;As you might have known, i know nothing about Ruby nowadays — my Ruby days were long gone.
+        Please don&#39;t get me wrong, Ruby is a sexy programming language.
+        But you know what, not all people able to deal with the &lt;em&gt;hottie&lt;/em&gt; for a long-term relationship.&lt;/p&gt;
+        &lt;p&gt;&lt;img alt=&#34;nosebleed&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/nosebleed-anime.jpg&#34;/&gt;&lt;/p&gt;
+        &lt;h2&gt;Second Attempt: Keep Calm &amp;amp; Move On&lt;/h2&gt;
+        &lt;p&gt;At the same day, i suddenly remembered about a Python library called &lt;a href=&#34;https://github.com/josegonzalez/beaver&#34;&gt;Beaver&lt;/a&gt;.
+        From its repository page, Beaver is best described as:&lt;/p&gt;
+        &lt;blockquote&gt;
+        &lt;p&gt;python daemon that munches on logs and sends their contents to logstash&lt;/p&gt;
+        &lt;/blockquote&gt;
+        &lt;p&gt;Obviously, Beaver acts as a &lt;a href=&#34;http://logstash.net/&#34;&gt;Logstash&lt;/a&gt; input plugin.
+        Well, i can haz Beaver for Fluentd?&lt;/p&gt;
+        &lt;h3&gt;Looking At The Big Picture&lt;/h3&gt;
+        &lt;p&gt;So i sat down and read the internal documentation on how &lt;a href=&#34;http://www.beautiplan.com/&#34;&gt;Beautiplan&lt;/a&gt;
+        infrastructure are made of — especially the logging files management section.
+        Anyway, here&#39;s the schema with a little detail for each component:&lt;/p&gt;
+        &lt;p&gt;&lt;img alt=&#34;schema&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/schema.png&#34;/&gt;&lt;/p&gt;
+        &lt;ol&gt;
+        &lt;li&gt;
+        &lt;h4&gt;forwarder&lt;/h4&gt;
+        &lt;p&gt;&lt;em&gt;forwarder&lt;/em&gt; is a daemonized program. Its main job is tailing a rotated log file,
+        parse each line, and send the result to &lt;em&gt;aggregator&lt;/em&gt; elsewhere.
+        Just imagine a &lt;code&gt;tail -F scarry.log&lt;/code&gt; command with steroid.
+        Fluentd, Beaver, or your own script fits the job, as long as it knows
+        how to speak to &lt;em&gt;aggregator&lt;/em&gt;.&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        &lt;h4&gt;aggregator&lt;/h4&gt;
+        &lt;p&gt;Actually &lt;em&gt;aggregator&lt;/em&gt; is the first-class citizen here.
+        Everything is setup to match its behavior.
+        Its job is to receive incoming data — usually a JSON — do some works,
+        and send the result elsewhere, either a simple &lt;em&gt;stdout&lt;/em&gt; or remote &lt;em&gt;datastore&lt;/em&gt;.
+        Fluentd, Logstash, or even &lt;a href=&#34;https://github.com/mozilla-services/heka&#34;&gt;Heka&lt;/a&gt; will do the job for you.&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        &lt;h4&gt;datastore&lt;/h4&gt;
+        &lt;p&gt;The &lt;em&gt;datastore&lt;/em&gt; stores (dooh) the timeseries data extracted from a log.
+        It&#39;s &lt;a href=&#34;http://elasticsearch.org/&#34;&gt;ElasticSearch&lt;/a&gt; by the way. Other datastores might work.&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+        &lt;h4&gt;frontend&lt;/h4&gt;
+        &lt;p&gt;Remember the old days when you have to stare hundred lines of a log file (bad)
+        or doing shell command and pipeline magic (better) to know what&#39;s really
+        going on in your production-ready application?
+        Enter &lt;a href=&#34;http://rashidkpc.github.io/Kibana/&#34;&gt;Kibana&lt;/a&gt; or &lt;a href=&#34;http://www.elasticsearch.org/overview/kibana/&#34;&gt;Kibana 3&lt;/a&gt; then!
+        I think you&#39;ll like this web-based log visualization app.&lt;/p&gt;
+        &lt;/li&gt;
+        &lt;/ol&gt;
+        &lt;p&gt;Given the schema above, i realized that i need to replace &lt;em&gt;forwarder&lt;/em&gt; with
+        Beaver-like library. After all, the box where current &lt;em&gt;forwarder&lt;/em&gt; program lives
+        right now, is a server where it has plenty of Python-based scripts there.
+        So i though, let&#39;s add yet another Python script.&lt;/p&gt;
+        &lt;h2&gt;Current Status: Flosculus in Action&lt;/h2&gt;
+        &lt;p&gt;At its core, Beaver uses &lt;a href=&#34;http://code.activestate.com/recipes/577968-log-watcher-tail-f-log/&#34;&gt;this script&lt;/a&gt; (MIT-licensed).
+        So i took down that one, combined with &lt;a href=&#34;https://github.com/fluent/fluent-logger-python&#34;&gt;Python binding for Fluentd&lt;/a&gt;,
+        did some modification, and voila ... it&#39;s &lt;a href=&#34;https://github.com/iromli/flosculus&#34;&gt;Flosculus&lt;/a&gt;.
+        Flosculus is very young and definetely will need lots of enhancements.
+        But it&#39;s already running in production though.&lt;/p&gt;
+        &lt;p&gt;Yes, i know some of you might said, &lt;em&gt;&#34;Dont reinvent the wheel&#34;&lt;/em&gt;.
+        But what if the wheels aren&#39;t exactly what i need?&lt;/p&gt;
+        &lt;p&gt;&lt;img alt=&#34;bicycle&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/bicycle.jpg&#34;/&gt;&lt;/p&gt;
+        &lt;p&gt;In the end, Flosculus is my attempt to create something like Beaver or Fluentd &lt;code&gt;in_tail&lt;/code&gt; plugin.
+        I wanna see it grows (or likely dies prematurely). The future is far beyond.&lt;/p&gt;</content>
+            </entry>
+    
         <entry>
                 <title>Introducing Genma</title>
                 <link rel="alternate" type="text/html" href="http://groovematic.com/2013/07/introducing-genma/" />
