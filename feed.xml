@@ -12,7 +12,7 @@
     <icon>http://groovematic.com/favicon.ico</icon>
     <logo>http://groovematic.com/feed-logo.png</logo>
     <updated>2014-08-09T07:41:00Z</updated>
-    <generator uri="https://github.com/posativ/acrylamid/" version="0.7.7">acrylamid</generator>
+    <generator uri="https://github.com/posativ/acrylamid/" version="0.7.1">acrylamid</generator>
         <entry>
         <title>Python: When The Two Become One</title>
         <link rel="alternate" type="text/html" href="http://groovematic.com/2014/08/python-when-the-two-become-one/" />
