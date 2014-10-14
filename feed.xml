@@ -11,8 +11,147 @@
     <link rel="self" type="application/atom+xml" href="http://groovematic.com/feed.xml" />
     <icon>http://groovematic.com/favicon.ico</icon>
     <logo>http://groovematic.com/feed-logo.png</logo>
-    <updated>2014-08-09T07:41:00Z</updated>
+    <updated>2014-10-13T22:28:00Z</updated>
     <generator uri="https://github.com/posativ/acrylamid/" version="0.7.1">acrylamid</generator>
+        <entry>
+        <title>Feature Flags in Flask</title>
+        <link rel="alternate" type="text/html" href="http://groovematic.com/2014/10/feature-flags-in-flask/" />
+        <id>tag:groovematic.com,2014-10-14:/2014/10/feature-flags-in-flask</id>
+        <updated>2014-10-13T22:28:00Z</updated>
+        
+        <author>
+            <name>Isman Firmansyah</name>
+            <uri>http://groovematic.com/</uri>
+            <email>isman.firmansyah@gmail.com</email>
+        </author>
+        <content type="html">&lt;p&gt;&lt;strong&gt;Headups: It&#39;s worth noting that although this post is about feature flags in Flask, you may find something useful
+that inspires you ... hopefully.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;flag&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2014/10/iwojima-lego.jpg&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;There&#39;s a time when we have one or more unfinished features,
+but we need to push our code into production.
+Depends on our usecase, a &lt;a href=&#34;http://martinfowler.com/bliki/FeatureBranch.html&#34;&gt;feature branch&lt;/a&gt;
+approach may work best for us.
+But there&#39;s an alternative called &lt;strong&gt;feature flag&lt;/strong&gt; (also known as &lt;a href=&#34;http://martinfowler.com/bliki/FeatureToggle.html&#34;&gt;feature toggle&lt;/a&gt;).
+The latter approach keeps us away from &lt;strong&gt;merging complexity&lt;/strong&gt; introduced by the former,
+especially if we have a long-running release cycle.&lt;/p&gt;
+&lt;h4&gt;State is Our Friend&lt;/h4&gt;
+&lt;p&gt;The main idea of feature flag is to enable/disable particular features of our app simply by toggling
+a state tied to each feature we want to expose/unexpose.
+These states might be stored in and loaded from database, configuration file, etc.&lt;/p&gt;
+&lt;p&gt;A simple example of feature flag implementation is to enable/disable, let&#39;s say a secret page in our web app.&lt;/p&gt;
+&lt;p&gt;First things first, store the state elsewhere (database, config file, etc) as unfinished feature.
+When a request hits the secret page, checks the state of that feature, then bail out — since it&#39;s an unfinished feature.
+&lt;img alt=&#34;disabled state&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2014/10/state-disabled.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;Now, whenever we want to expose the secret page, simply change the state as finished.
+Make sure the page is enabled when request comes in.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;enabled state&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2014/10/state-enabled.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;By mangling the state, we can keep focus on writing code without worrying unfinished features got leaked to the world — unless we accidentally expose the features though.&lt;/p&gt;
+&lt;h4&gt;Flask-FeatureFlags&lt;/h4&gt;
+&lt;p&gt;As I work primarily in &lt;a href=&#34;http://flask.pocoo.org/&#34;&gt;Flask&lt;/a&gt; nowadays,
+I&#39;ve found that &lt;a href=&#34;https://github.com/trustrachel/Flask-FeatureFlags&#34;&gt;Flask-FeatureFlags&lt;/a&gt; extension gives me everything I need (for now),
+and it&#39;s relatively easy to use.&lt;/p&gt;
+&lt;p&gt;Things to remember about FeatureFlags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;By default, the extension loads states from app&#39;s config; most of the time it will be a Python module.&lt;/li&gt;
+&lt;li&gt;By default, the extension uses &lt;code&gt;dict&lt;/code&gt; with a specific format, e.g. &lt;code&gt;FEATURE_FLAGS = {&#34;any_feature_name&#34;: True}&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The extension has &lt;a href=&#34;https://flask-featureflags.readthedocs.org/en/latest/contrib.html&#34;&gt;contrib&lt;/a&gt; modules, including interface to load states from database and &lt;a href=&#34;https://github.com/trustrachel/Flask-FeatureFlags/blob/73a960f62e4f504452538e0a5f56ace08ea68390/CHANGES.rst#051-october-13-2014&#34;&gt;inline&lt;/a&gt; string format.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h5&gt;Working with Inline Format&lt;/h5&gt;
+&lt;p&gt;Since I rarely using database to store configuration, I choose inline format introduced since &lt;code&gt;0.6-dev&lt;/code&gt; version and it&#39;s not available at PyPI yet;
+hence to install the bleeding edge version, we need to pull it from GitHub.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;c&#34;&gt;# install bleeding edge version of Flask-FeatureFlags&lt;/span&gt;
+pip install -e git+https://github.com/trustrachel/Flask-FeatureFlags@02fe552ea907d9f2da271e191a9e7c5f4ff21a12#egg&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;Flask_FeatureFlags-master
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;One notable difference with default format is, instead of specifying features in &lt;code&gt;dict&lt;/code&gt;,
+inline format recognizes the features in plain string with &lt;code&gt;FEATURE_FLAGS_X&lt;/code&gt; format, where &lt;code&gt;X&lt;/code&gt; is the actual feature name — all in uppercase.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;c&#34;&gt;# default format&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;FEATURE_FLAGS&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;s&#34;&gt;&amp;quot;secret_page&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+    &lt;span class=&#34;s&#34;&gt;&amp;quot;another_secret_page&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# inline format&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;FEATURE_FLAGS_SECRET_PAGE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;True&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;FEATURE_FLAGS_ANOTHER_SECRET_PAGE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The disadvantage of this inline format is we have more characters to type.
+But, by specifying feature using inline format, it plays nicely with &lt;a href=&#34;https://pypi.python.org/pypi/flask-appconfig&#34;&gt;Flask-AppConfig&lt;/a&gt;.
+This means I can enable/disable feature using environment variable exported from command line,
+as Flask-AppConfig follows the &lt;a href=&#34;http://12factor.net/config&#34;&gt;The Twelve-Factor App&lt;/a&gt; config manifesto.&lt;/p&gt;
+&lt;p&gt;To install Flask-AppConfig, simply use &lt;code&gt;pip&lt;/code&gt; from a shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;pip install flask-appconfig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Once Flask-AppConfig is configured properly, enabling/disabling a feature is simply typing it from command line.
+Remember the &lt;code&gt;FEATURE_FLAGS_ANOTHER_SECRET_PAGE&lt;/code&gt; line above?&lt;/p&gt;
+&lt;p&gt;Let&#39;s enable another secret page feature from a shell:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;c&#34;&gt;# set the value as Python truth-y&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# notice the prefix before FEATURE_FLAGS_ANOTHER_SECRET_PAGE?&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# it&amp;#39;s convention used by Flask-AppConfig,&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# and it doesnt&amp;#39; have to be APP though&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;APP_FEATURE_FLAGS_ANOTHER_SECRET_PAGE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In the last section of this post, I will give you snippet to implement the &#34;secret page&#34; example above using Flask-FeatureFlags and Flask-AppConfig.&lt;/p&gt;
+&lt;h5&gt;Flag &#39;em Run &#39;em&lt;/h5&gt;
+&lt;p&gt;Given the &#34;secret page&#34; example above, let&#39;s implement it in a Flask app.
+Don&#39;t forget to install Flask-FeatureFlags and Flask-AppConfig first.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;c&#34;&gt;# app.py&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;flask&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;flask_featureflags&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;as&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;feature&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;flask.ext.appconfig&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AppConfig&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;flask_featureflags.contrib.inline&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;InlineFeatureFlag&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;FEATURE_FLAGS_SECRET_PAGE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;bp&#34;&gt;False&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flask&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Flask&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__name__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# As we&amp;#39;re passing `__name__` when creating Flask app,&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# it means our `app.name` equals to &amp;quot;app&amp;quot;.&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# Flask-AppConfig will recognize any `APP_*` env variable.&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# If we need to change the prefix, set `app.name`&lt;/span&gt;
+&lt;span class=&#34;c&#34;&gt;# into something else, before initializing the extension.&lt;/span&gt;
+
+&lt;span class=&#34;c&#34;&gt;# Loads default config from current module&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;appconfig&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AppConfig&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;default_settings&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;__name__&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;feature&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FeatureFlag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;add_handler&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;InlineFeatureFlag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+
+
+&lt;span class=&#34;nd&#34;&gt;@app.route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;index&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;Homepage&amp;quot;&lt;/span&gt;
+
+
+&lt;span class=&#34;nd&#34;&gt;@app.route&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;/secret&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;nd&#34;&gt;@feature.is_active_feature&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;SECRET_PAGE&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;redirect_to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;secret_page&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;Secret Page&amp;quot;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To test whether &#34;secret page&#34; is disabled, simply run:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;python app.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To enable &#34;secret page&#34; from a shell, run:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nv&#34;&gt;APP_FEATURE_FLAGS_SECRET_PAGE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;1 python app.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It&#39;s quite simple isn&#39;t it?&lt;/p&gt;</content>
+    </entry>
+    
         <entry>
         <title>Python: When The Two Become One</title>
         <link rel="alternate" type="text/html" href="http://groovematic.com/2014/08/python-when-the-two-become-one/" />
