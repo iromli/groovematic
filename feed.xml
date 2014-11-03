@@ -235,7 +235,7 @@ Why don&#39;t we start from now?&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Estadio Mineirao, Belo Horizonte&lt;/strong&gt; — 15720.38 km/9768.19 miles from Indonesia —
 Germany knocked down Brazil with stunning scoresheet, 7 - 1.
 An embarassing moment for Brazil as a 5 times world champion and World Cup host.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;Distance between Jakarta and Brazil&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2014/07/jkt-bra.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;Distance between Jakarta and Brazil&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2014/07/jkt-bra.png&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;As a football fan, I really enjoy how Germany played and won the game.
 But that&#39;s not what makes me happy.
 Instead, I like how both parties trying to comfort each others.
@@ -255,7 +255,7 @@ where people start their days with real fights.&lt;/p&gt;
 &lt;h4&gt;The Far East Saga&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;Gaza, Palestine&lt;/strong&gt; — 8735.73 km/5428.13 miles from Indonesia — was under attack (again) by Israelis
 with their &#34;Operation Protective Edge&#34;.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;Distance between Jakarta and Gaza&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2014/07/jkt-gaza.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;Distance between Jakarta and Gaza&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2014/07/jkt-gaza.png&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;According to various sources (yes, I read western and eastern media as well),
 the conflict escalated after 3 Israel kids were &lt;a href=&#34;http://www.al-monitor.com/pulse/originals/2014/06/qawasmeh-clan-hebron-hamas-leadership-mahmoud-abbas.html&#34;&gt;kidnapped and murdered by Hamas&lt;/a&gt;.
 Afterwards, a Palestinian kid named Mohammed Abu Khdeir &lt;a href=&#34;http://www.qassam.ps/news-8589-Autopsy_Abu_Khdeir_was_alive_when_he_was_set_on_fire_by_settlers.html&#34;&gt;kidnapped and burned alive&lt;/a&gt; by Israelis.
@@ -320,7 +320,7 @@ log aggregation, error reporting, etc.&lt;/p&gt;
 &lt;p&gt;I hate to say goodbye, but at the end of this month, I will no longer work for Beautiplan.
 It&#39;s a tough decision, but I have to move on as my interests have been shifted and I&#39;m pursuing something else.&lt;/p&gt;
 &lt;p&gt;Thanks to everyone at Beautiplan. Lovely people, joyful moments.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;In my heart&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2014/02/in-my-heart.png&#34;/&gt;&lt;/p&gt;</content>
+&lt;p&gt;&lt;img alt=&#34;In my heart&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2014/02/in-my-heart.png&#34;/&gt;&lt;/p&gt;</content>
     </entry>
     
         <entry>
@@ -336,7 +336,7 @@ It&#39;s a tough decision, but I have to move on as my interests have been shift
         </author>
         <content type="html">&lt;h4&gt;A Call For Help&lt;/h4&gt;
 &lt;p&gt;Few days ago, i tweeted this:&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;CPU-blown&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/cpu-blown.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;CPU-blown&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/cpu-blown.png&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;If you notice, the top 2 commands show a huge difference between
 CPU usage consumed by Ruby and Python programs — the former is a
 &lt;a href=&#34;http://fluentd.org/&#34;&gt;Fluentd&lt;/a&gt;-based script that collects &lt;a href=&#34;http://nginx.org/&#34;&gt;nginx&lt;/a&gt; access log,
@@ -359,7 +359,7 @@ how Fluentd works internally. &lt;strong&gt;And i failed!!&lt;/strong&gt;&lt;/p&
 &lt;p&gt;As you might have known, i know nothing about Ruby nowadays — my Ruby days were long gone.
 Please don&#39;t get me wrong, Ruby is a sexy programming language.
 But you know what, not all people able to deal with the &lt;em&gt;hottie&lt;/em&gt; for a long-term relationship.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;nosebleed&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/nosebleed-anime.jpg&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;nosebleed&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/nosebleed-anime.jpg&#34;/&gt;&lt;/p&gt;
 &lt;h4&gt;Second Attempt: Keep Calm &amp;amp; Move On&lt;/h4&gt;
 &lt;p&gt;At the same day, i suddenly remembered about a Python library called &lt;a href=&#34;https://github.com/josegonzalez/beaver&#34;&gt;Beaver&lt;/a&gt;.
 From its repository page, Beaver is best described as:&lt;/p&gt;
@@ -372,7 +372,7 @@ Well, i can haz Beaver for Fluentd?&lt;/p&gt;
 &lt;p&gt;So i sat down and read the internal documentation on how &lt;a href=&#34;http://www.beautiplan.com/&#34;&gt;Beautiplan&lt;/a&gt;
 infrastructure are made of — especially the logging files management section.
 Anyway, here&#39;s the schema with a little detail for each component:&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;schema&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/schema.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;schema&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/schema.png&#34;/&gt;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;h6&gt;forwarder&lt;/h6&gt;
@@ -416,7 +416,7 @@ Flosculus is very young and definetely will need lots of enhancements.
 But it&#39;s already running in production though.&lt;/p&gt;
 &lt;p&gt;Yes, i know some of you might said, &lt;em&gt;&#34;Dont reinvent the wheel&#34;&lt;/em&gt;.
 But what if the wheels aren&#39;t exactly what i need?&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;bicycle&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/bicycle.jpg&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;bicycle&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2013/11/bicycle.jpg&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;In the end, Flosculus is my attempt to create something like Beaver or Fluentd &lt;code&gt;in_tail&lt;/code&gt; plugin.
 I wanna see it grows (or likely dies prematurely). The future is far beyond.&lt;/p&gt;</content>
     </entry>
@@ -806,9 +806,9 @@ Both are cool projects, but in the end i chose nanoc over Pelican. Despite of be
 Then the problem came up. Whenever i need to customize the library, i cringed for knowing that my Ruby knowledge is horrible.&lt;/p&gt;
 &lt;p&gt;During my journey to find a nanoc-like Python-based static website generator, i rant about it on Twitter.
 Surprisingly, the core developer of nanoc gave his reaction.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;me and dennis having a talk&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/01/nanoc-convo.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;me and dennis having a talk&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2013/01/nanoc-convo.png&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;As you could see, i was using &lt;a href=&#34;https://github.com/Anomareh/mynt&#34;&gt;Mynth&lt;/a&gt; before i found Acrylamid. Anyway, here&#39;s my reaction after reading Acrylamid&#39;s &lt;code&gt;README.rst&lt;/code&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;first impression&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2013/01/i-found-acrylamid.png&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;first impression&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2013/01/i-found-acrylamid.png&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;Well, that&#39;s true. Acrylamid is promising. Moreover, it&#39;s built on top of Python, i feel confident to use it whatever i want. I also made &lt;a href=&#34;https://github.com/posativ/acrylamid/pull/97&#34;&gt;my first contribution&lt;/a&gt; recently.&lt;/p&gt;
 &lt;h4&gt;Another Story: The Gotchas&lt;/h4&gt;
 &lt;blockquote&gt;
@@ -895,12 +895,12 @@ Voila, everything is worked as i expected.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/jkbr/httpie&#34; target=&#34;_blank&#34;&gt;HTTPie&lt;/a&gt; with &lt;code&gt;monokai&lt;/code&gt; theme&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h5&gt;People I&#39;ve Met&lt;/h5&gt;
-&lt;p&gt;&lt;img alt=&#34;Python ID&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2012/12/minipycon-2012.jpg&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;Python ID&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2012/12/minipycon-2012.jpg&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;Python Indonesia meetup at Detik, and it was fun!! We share knowledge, insight, almost anything about Python and the community itself.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;blaast&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2012/12/blaast-sixreps.jpg&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;blaast&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2012/12/blaast-sixreps.jpg&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.blaast.com/&#34;&gt;Blaast&lt;/a&gt; Indonesia representatives visited SixReps HQ.
 They gave a talk about their platform, cloud mobile, and a little bit of NodeJS.&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&#34;hackathon&#34; class=&#34;thumbnail&#34; src=&#34;http://groovematic.com/img/2012/12/startup-asia.jpg&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;hackathon&#34; class=&#34;img-thumbnail&#34; src=&#34;http://groovematic.com/img/2012/12/startup-asia.jpg&#34;/&gt;&lt;/p&gt;
 &lt;p&gt;My first hackathon event -- 48 hours, hundreds of developers, cold weather, lovely city Bandung.&lt;/p&gt;
 &lt;h4&gt;Roadmap For 2013 (And Beyond)&lt;/h4&gt;
 &lt;blockquote&gt;
